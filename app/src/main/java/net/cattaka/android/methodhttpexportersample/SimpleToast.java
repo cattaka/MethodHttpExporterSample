@@ -20,4 +20,8 @@ public class SimpleToast {
         Toast.makeText(mContext, text, Toast.LENGTH_SHORT).show();
         return "Succeed";
     }
+    public String doNumberToast(Integer number) {
+        Toast.makeText(mContext, "Number:"+number, Toast.LENGTH_SHORT).show();
+        return "Succeed";
+    }
 }
