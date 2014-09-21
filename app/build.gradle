@@ -29,6 +29,6 @@ apt {
 }
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    apt 'net.cattaka:methodhttpexporter-apt:0.4.0'
-    compile 'net.cattaka:methodhttpexporter-core:0.4.0'
+    apt 'net.cattaka:methodhttpexporter-apt:0.4.4'
+    compile 'net.cattaka:methodhttpexporter-core:0.4.4'
 }

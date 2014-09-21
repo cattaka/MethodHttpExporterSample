@@ -27,4 +27,9 @@ public class SimpleToast {
         Toast.makeText(mContext, "Number:"+number, Toast.LENGTH_SHORT).show();
         return "Succeed";
     }
+
+    @ExportMethodHttpAttr
+    public void doVoid(Integer number) {
+        Toast.makeText(mContext, "void:"+number, Toast.LENGTH_SHORT).show();
+    }
 }
