@@ -5,8 +5,14 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import net.cattaka.util.methodhttpexporter.annotation.ExportMethodHttp;
+import net.cattaka.util.methodhttpexporter.annotation.ExportMethodHttpAttr;
 
+import java.io.IOException;
+
+@ExportMethodHttp
 public class MyActivity extends Activity {
+    MyActivityHttpServer myActivityHttpServer = new MyActivityHttpServer(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -14,23 +20,59 @@ public class MyActivity extends Activity {
         setContentView(R.layout.activity_my);
     }
 
-
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.my, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
+    protected void onStart() {
+        super.onStart();
+        {   // Run Development tool
+            try {
+                myActivityHttpServer.run(8091);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
         }
-        return super.onOptionsItemSelected(item);
     }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        {   // Terminate Development tool
+            try {
+                myActivityHttpServer.terminate();
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+
+    @ExportMethodHttpAttr
+    String clickItem1Radio() {
+        findViewById(R.id.item1Radio).performClick();
+        return "Item 1 clicked";
+    }
+    @ExportMethodHttpAttr
+    String clickItem2Radio() {
+        findViewById(R.id.item2Radio).performClick();
+        return "Item 2 clicked";
+    }
+    @ExportMethodHttpAttr
+    String clickItem3Radio() {
+        findViewById(R.id.item3Radio).performClick();
+        return "Item 3 clicked";
+    }
+    @ExportMethodHttpAttr
+    String clickItemRadio(int i) {
+        switch (i) {
+            case 1:
+                return clickItem1Radio();
+            case 2:
+                return clickItem2Radio();
+            case 3:
+                return clickItem3Radio();
+            default:
+                return "Out of index";
+        }
+    }
+
+
+
 }
